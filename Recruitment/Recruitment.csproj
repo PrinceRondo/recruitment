@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200623162243_test.cs" />
+    <Compile Remove="Migrations\20200623162243_test.Designer.cs" />
+    <Compile Remove="Migrations\20200624070352_test.cs" />
+    <Compile Remove="Migrations\20200624070352_test.Designer.cs" />
+    <Compile Remove="Migrations\20200624070942_test.cs" />
+    <Compile Remove="Migrations\20200624070942_test.Designer.cs" />
+    <Compile Remove="Migrations\20200624085522_test.cs" />
+    <Compile Remove="Migrations\20200624085522_test.Designer.cs" />
+    <Compile Remove="Migrations\20200625132138_test.cs" />
+    <Compile Remove="Migrations\20200625132138_test.Designer.cs" />
+    <Compile Remove="Migrations\20200629135517_test.cs" />
+    <Compile Remove="Migrations\20200629135517_test.Designer.cs" />
+    <Compile Remove="Migrations\20200630100910_test.cs" />
+    <Compile Remove="Migrations\20200630100910_test.Designer.cs" />
+    <Compile Remove="Migrations\20200712171004_test.cs" />
+    <Compile Remove="Migrations\20200712171004_test.Designer.cs" />
+    <Compile Remove="Migrations\20200714142854_test.cs" />
+    <Compile Remove="Migrations\20200714142854_test.Designer.cs" />
+    <Compile Remove="Migrations\20200715100826_test.cs" />
+    <Compile Remove="Migrations\20200715100826_test.Designer.cs" />
+    <Compile Remove="Migrations\20200715105411_test.cs" />
+    <Compile Remove="Migrations\20200715105411_test.Designer.cs" />
+    <Compile Remove="Migrations\20200721162500_test.cs" />
+    <Compile Remove="Migrations\20200721162500_test.Designer.cs" />
+    <Compile Remove="Migrations\20200722073751_test.cs" />
+    <Compile Remove="Migrations\20200722073751_test.Designer.cs" />
+    <Compile Remove="Migrations\20200805135655_test.cs" />
+    <Compile Remove="Migrations\20200805135655_test.Designer.cs" />
+    <Compile Remove="Migrations\20200805142718_test.cs" />
+    <Compile Remove="Migrations\20200805142718_test.Designer.cs" />
+    <Compile Remove="Migrations\20200812132946_test.cs" />
+    <Compile Remove="Migrations\20200812132946_test.Designer.cs" />
+    <Compile Remove="Migrations\20200816172912_test.cs" />
+    <Compile Remove="Migrations\20200816172912_test.Designer.cs" />
+    <Compile Remove="Migrations\20200817184607_test.cs" />
+    <Compile Remove="Migrations\20200817184607_test.Designer.cs" />
+    <Compile Remove="Migrations\20200827155957_test.cs" />
+    <Compile Remove="Migrations\20200827155957_test.Designer.cs" />
+    <Compile Remove="Migrations\20200902070750_test.cs" />
+    <Compile Remove="Migrations\20200902070750_test.Designer.cs" />
+    <Compile Remove="Migrations\20200902071803_test.cs" />
+    <Compile Remove="Migrations\20200902071803_test.Designer.cs" />
+    <Compile Remove="Models\AppDbContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,10 @@
+﻿@{
+    if (ViewBag.Code == 200)
+    {
+        <h3 class="text-success">Email Confirmed, kindly sign in</h3>       
+    }
+    else
+    {
+        <h3 class="text-danger">@ViewBag.Message</h3>
+    }
+}
