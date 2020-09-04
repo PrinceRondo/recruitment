@@ -151,8 +151,8 @@ namespace Recruitment.Repository
         Task<ResponseModel> SaveAsync(RecruitmentLocationViewModel model);
         Task<IEnumerable<RecruitmentLocationViewModel>> GetAll();
         Task<RecruitmentLocationViewModel> GetRecruitmentLocationById(long id);
-        Task<ResponseModel> UpdateAsync(int id, RecruitmentLocationViewModel model);
-        Task<ResponseModel> DeleteAsync(int id);
+        Task<ResponseModel> UpdateAsync(long id, RecruitmentLocationViewModel model);
+        Task<ResponseModel> DeleteAsync(long id);
     }
 
     public interface IOrganizationDocumentRepository

@@ -21,7 +21,7 @@ namespace Recruitment.Repository
             this.dbContext = dbContext;
             this.userManager = userManager;
         }
-        public async Task<ResponseModel> DeleteAsync(int id)
+        public async Task<ResponseModel> DeleteAsync(long id)
         {
             ResponseModel response = new ResponseModel();
             try
@@ -166,7 +166,7 @@ namespace Recruitment.Repository
             return response;
         }
 
-        public async Task<ResponseModel> UpdateAsync(int id, RecruitmentLocationViewModel model)
+        public async Task<ResponseModel> UpdateAsync(long id, RecruitmentLocationViewModel model)
         {
             ResponseModel response = new ResponseModel();
             try
