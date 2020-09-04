@@ -39,7 +39,7 @@ namespace Recruitment.Controllers
         }
         [Route("[action]")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRecruitmentLocation(int id, [FromBody]RecruitmentLocationViewModel model)
+        public async Task<IActionResult> UpdateRecruitmentLocation(long id, [FromBody]RecruitmentLocationViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace Recruitment.Controllers
         }
         [Route("[action]")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRecruitmentLocation(int id)
+        public async Task<IActionResult> DeleteRecruitmentLocation(long id)
         {
             if (!ModelState.IsValid)
             {
