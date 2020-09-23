@@ -213,7 +213,8 @@ namespace Recruitment.Repository
                                 Lastname = e.Lastname,
                                 OrganisationId = e.OrganisationId,
                                 Organization = e.Organisation.CompanyName,
-                                PhoneNumber = e.PhoneNumber
+                                PhoneNumber = e.PhoneNumber,
+                                UserId = e.UserId
                             }).FirstOrDefaultAsync();
                         }
                         else if (userRoles.Contains("admin"))

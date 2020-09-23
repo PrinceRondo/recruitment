@@ -17,6 +17,20 @@ namespace Recruitment.Repository
         Task<object> Login(LoginViewModel model);
         Task<ResponseModel> ConfirmEmail(string email);
     }
+
+    public interface IUserProfileRepository
+    {
+        Task<ResponseModel> UpdateOrganizationProfileAsync(long id, UpdateProfileViewModel model);
+        Task<ResponseModel> UpdateApplicantProfileAsync(long id, UpdateProfileViewModel model);
+        Task<ResponseModel> UpdateOrganizationUserProfileAsync(long id, UpdateProfileViewModel model);
+        Task<IEnumerable<OrganizationProfile>> GetAllOrganizationProfile();
+        Task<IEnumerable<ApplicantProfile>> GetAllApplicantProfile();
+        Task<IEnumerable<OrganizationUsersInfo>> GetAllOrganizationUserProfile(long OrganizationId);
+        Task<OrganizationProfile> GetOrganizationProfileById(long id);
+        Task<ApplicantProfile> GetApplicantProfileById(long id);
+        Task<OrganizationUsersInfo> GetOrganizationUserProfileById(long id);
+
+    }
     public interface IGenderRepository
     {
         Task<Gender> FindByNameAsync(string name);
