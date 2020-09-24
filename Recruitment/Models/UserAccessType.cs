@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Recruitment.Models
 {
-    public class AccessType
+    public class UserAccessType
     {
         public int Id { get; set; }
         public string type { get; set; }

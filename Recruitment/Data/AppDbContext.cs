@@ -44,5 +44,6 @@ namespace Recruitment.Data
         public virtual DbSet<ApplicantProfile> ApplicantProfiles { get; set; }
         public virtual DbSet<RecruitmentLocation> RecruitmentLocations { get; set; }
         public virtual DbSet<RecruitmentLocationType> RecruitmentLocationTypes { get; set; }
+        public virtual DbSet<UserAccessType> UserAccessTypes { get; set; }
     }
 }
