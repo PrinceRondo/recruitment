@@ -10,7 +10,7 @@ using Recruitment.Data;
 namespace Recruitment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200903102958_test")]
+    [Migration("20200924052826_test")]
     partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -892,6 +892,19 @@ namespace Recruitment.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RecruitmentLocationTypes");
+                });
+
+            modelBuilder.Entity("Recruitment.Models.UserAccessType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserAccessTypes");
                 });
 
             modelBuilder.Entity("Recruitment.Models.VerificationStatus", b =>
