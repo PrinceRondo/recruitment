@@ -49,6 +49,7 @@ namespace Recruitment
 
             services.AddTransient<SeedData>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IBioDataRepository, BioDataRepository>();
             services.AddTransient<IAcademicsRepository, AcademicsRepository>();
             services.AddTransient<IMaritalStatusRepository, MaritalStatusRepository>();
