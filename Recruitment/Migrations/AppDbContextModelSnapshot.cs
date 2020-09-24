@@ -892,6 +892,19 @@ namespace Recruitment.Migrations
                     b.ToTable("RecruitmentLocationTypes");
                 });
 
+            modelBuilder.Entity("Recruitment.Models.UserAccessType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserAccessTypes");
+                });
+
             modelBuilder.Entity("Recruitment.Models.VerificationStatus", b =>
                 {
                     b.Property<long>("Id")

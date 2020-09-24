@@ -17,7 +17,7 @@ namespace Recruitment.Data
            IInstitutionRepository institutionRepository, ICourseRepository courseRepository,
            IDocumentCategoryRepository categoryRepository, IGradeRepository gradeRepository,
            IIndustryRepository industryRepository, IJobTypeRepository typeRepository,
-           IRecruitmentLocationTypeRepository LocationtypeRepository
+           IRecruitmentLocationTypeRepository LocationtypeRepository, IUserAccessTypeRepository accessTypeRepository
            )
         {
             SeedRoles(roleManager);
@@ -32,7 +32,8 @@ namespace Recruitment.Data
             SeedGrade(gradeRepository);
             SeedIndustry(industryRepository);
             SeedJobType(typeRepository);
-            RecruitmentLocationType(LocationtypeRepository);
+            SeedRecruitmentLocationType(LocationtypeRepository);
+            SeedUserAccessType(accessTypeRepository);
         }
         public static void SeedRoles(RoleManager<IdentityRole> roleManager)
         {
@@ -323,7 +324,7 @@ namespace Recruitment.Data
                 }
             }
         }
-        public static void RecruitmentLocationType(IRecruitmentLocationTypeRepository typeRepository)
+        public static void SeedRecruitmentLocationType(IRecruitmentLocationTypeRepository typeRepository)
         {
             string[] typeList = new string[] { "Head Office", "Branch"};
             foreach (string type in typeList)
@@ -337,6 +338,28 @@ namespace Recruitment.Data
                     try
                     {
                         typeRepository.SaveAsync(newLocation);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                }
+            }
+        }
+        public static void SeedUserAccessType(IUserAccessTypeRepository typeRepository)
+        {
+            string[] typeList = new string[] { "Create", "Read", "Update", "Delete", "Download" };
+            foreach (string type in typeList)
+            {
+                if (typeRepository.FindByNameAsync(type).Result == null)
+                {
+                    UserAccessType newType = new UserAccessType()
+                    {
+                        type = type
+                    };
+                    try
+                    {
+                        typeRepository.SaveAsync(newType);
                     }
                     catch (Exception ex)
                     {
