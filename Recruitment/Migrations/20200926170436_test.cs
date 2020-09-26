@@ -219,6 +219,19 @@ namespace Recruitment.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserFunctions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Function = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserFunctions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VerificationStatus",
                 columns: table => new
                 {
@@ -1204,6 +1217,9 @@ namespace Recruitment.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserAccessTypes");
+
+            migrationBuilder.DropTable(
+                name: "UserFunctions");
 
             migrationBuilder.DropTable(
                 name: "VerificationStatus");

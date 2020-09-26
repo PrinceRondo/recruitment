@@ -74,6 +74,7 @@ namespace Recruitment
             services.AddTransient<IOrganizationRoleRepository, OrganizationRoleRepository>();
             services.AddTransient<IOrganizationUserRoleRepository, OrganizationUserRoleRepository>();
             services.AddTransient<IUserAccessTypeRepository, UserAccessTypeRepository>();
+            services.AddTransient<IUserFunctionRepository, UserFunctionRepository>();
             services.AddTransient<Mailer>();
         }
 
@@ -84,7 +85,8 @@ namespace Recruitment
             IInstitutionRepository institutionRepository, ICourseRepository courseRepository,
             IDocumentCategoryRepository categoryRepository, IGradeRepository gradeRepository,
             IJobTypeRepository jobTypeRepository, IIndustryRepository industryRepository,
-            IRecruitmentLocationTypeRepository locationTypeRepository, IUserAccessTypeRepository accessTypeRepository)
+            IRecruitmentLocationTypeRepository locationTypeRepository, IUserAccessTypeRepository accessTypeRepository,
+            IUserFunctionRepository functionRepository)
         {
             if (env.IsDevelopment())
             {
@@ -101,7 +103,7 @@ namespace Recruitment
                 genderRepository, levelRepository,qualificationRepository,
                 institutionRepository, courseRepository, categoryRepository,
                 gradeRepository, industryRepository, jobTypeRepository,
-                locationTypeRepository, accessTypeRepository);
+                locationTypeRepository, accessTypeRepository, functionRepository);
         }
     }
 }
