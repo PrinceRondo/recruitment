@@ -17,7 +17,8 @@ namespace Recruitment.Data
            IInstitutionRepository institutionRepository, ICourseRepository courseRepository,
            IDocumentCategoryRepository categoryRepository, IGradeRepository gradeRepository,
            IIndustryRepository industryRepository, IJobTypeRepository typeRepository,
-           IRecruitmentLocationTypeRepository LocationtypeRepository, IUserAccessTypeRepository accessTypeRepository
+           IRecruitmentLocationTypeRepository LocationtypeRepository, IUserAccessTypeRepository accessTypeRepository,
+           IUserFunctionRepository functionRepository
            )
         {
             SeedRoles(roleManager);
@@ -34,6 +35,7 @@ namespace Recruitment.Data
             SeedJobType(typeRepository);
             SeedRecruitmentLocationType(LocationtypeRepository);
             SeedUserAccessType(accessTypeRepository);
+            SeedUserFunction(functionRepository);
         }
         public static void SeedRoles(RoleManager<IdentityRole> roleManager)
         {
@@ -360,6 +362,33 @@ namespace Recruitment.Data
                     try
                     {
                         typeRepository.SaveAsync(newType);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                }
+            }
+        }
+        public static void SeedUserFunction(IUserFunctionRepository functionRepository)
+        {
+            string[] functionList = new string[] { "Manage Job Vacancy", "Manage Job Postings", "Manage Interview Templates",
+                "Manage Interview Rooms", "Manage Job Profiles", "Process Applications", "Manage Schedules",
+                "Schedule Tests and Interviews", "Manage Reports", "Review Job Postings", "Review Job Profiles",
+                "Review Applications", "Review Templates", "Review Schedules", "Review  Tests and Interviews",
+                "Approve Applications", "Manage Schedules", "Manage Tasks and Events", "Submit Interview Scores",
+                "Manage Reports", "Manage Tasks and Events","Manage Profile"};
+            foreach (string func in functionList)
+            {
+                if (functionRepository.FindByNameAsync(func).Result == null)
+                {
+                    UserFunction newFunction = new UserFunction()
+                    {
+                        Function = func
+                    };
+                    try
+                    {
+                        functionRepository.SaveAsync(newFunction);
                     }
                     catch (Exception ex)
                     {

@@ -905,6 +905,19 @@ namespace Recruitment.Migrations
                     b.ToTable("UserAccessTypes");
                 });
 
+            modelBuilder.Entity("Recruitment.Models.UserFunction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Function");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserFunctions");
+                });
+
             modelBuilder.Entity("Recruitment.Models.VerificationStatus", b =>
                 {
                     b.Property<long>("Id")

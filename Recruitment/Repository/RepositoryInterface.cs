@@ -56,6 +56,12 @@ namespace Recruitment.Repository
         Task<ResponseModel> SaveAsync(UserAccessType model);
         Task<IEnumerable<UserAccessType>> GetAllAccessType();
     }
+    public interface IUserFunctionRepository
+    {
+        Task<UserFunction> FindByNameAsync(string name);
+        Task<ResponseModel> SaveAsync(UserFunction model);
+        Task<IEnumerable<UserFunction>> GetAllFunction();
+    }
     public interface IQualificationRepository
     {
         Task<Qualification> FindByNameAsync(string name);
