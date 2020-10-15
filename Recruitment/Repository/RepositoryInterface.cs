@@ -241,4 +241,15 @@ namespace Recruitment.Repository
         Task<ResponseModel> SaveAsync(RecruitmentLocationType model);
         Task<IEnumerable<RecruitmentLocationType>> GetAllLocationType();
     }
+
+    public interface IUserRoleAccessRepository
+    {
+        Task<IEnumerable<RoleFuctionAccessViewModel>> GetAllByOrgnizationId(long id);
+        Task<IEnumerable<RoleFuctionAccessViewModel>> GetAllByRoleId(long id);
+        Task<ResponseModel> SaveAsync(RoleFuctionAccessViewModel model);
+        Task<IEnumerable<RoleFuctionAccessViewModel>> GetAll();
+        Task<RoleFuctionAccessViewModel> GetUserRoleFuntionAccessById(long id);
+        Task<ResponseModel> UpdateAsync(long id, RoleFuctionAccessViewModel model);
+        Task<ResponseModel> DeleteAsync(long id);
+    }
 }

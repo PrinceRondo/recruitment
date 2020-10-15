@@ -40,12 +40,25 @@ namespace Recruitment.Repository
             }
             else
             {
+                string uniqueCode = string.Empty;
+                int dayoftheyear = DateTime.Now.DayOfYear;
+                int mseconds = DateTime.Now.Second;
+                int mhour = DateTime.Now.Hour;
+                int mmonth = DateTime.Now.Month;
+                int mminute = DateTime.Now.Minute;
+                int myear = DateTime.Now.Year;
+
+                if (model.CategoryId == 1 || model.CategoryId == 2)
+                {
+                    uniqueCode = (dayoftheyear + myear + mmonth + mhour + mminute + mseconds).ToString();
+                }
                 var newType = new DocumentType()
                 {
                     Type = model.Type,
                     CategoryId = model.CategoryId,
                     DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now
+                    DateUpdated = DateTime.Now,
+                    UniqueCode = uniqueCode
                 };
                 if (model.Type.Any())
                 {

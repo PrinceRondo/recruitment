@@ -73,8 +73,9 @@ namespace Recruitment
             services.AddTransient<IOrganizationJobRoleRepository, OrganizationJobRoleRepository>();
             services.AddTransient<IOrganizationRoleRepository, OrganizationRoleRepository>();
             services.AddTransient<IOrganizationUserRoleRepository, OrganizationUserRoleRepository>();
-            services.AddTransient<IUserAccessTypeRepository, UserAccessTypeRepository>();
+            services.AddTransient<IUserAccessTypeRepository, UserAccessTypeRepository>(); 
             services.AddTransient<IUserFunctionRepository, UserFunctionRepository>();
+            services.AddTransient<IUserRoleAccessRepository, UserRoleAccessRepository>();
             services.AddTransient<Mailer>();
         }
 
