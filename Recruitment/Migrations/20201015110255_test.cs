@@ -427,6 +427,7 @@ namespace Recruitment.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UniqueCode = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
@@ -827,6 +828,48 @@ namespace Recruitment.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserRoleFunctionAccess",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<long>(nullable: false),
+                    FunctionId = table.Column<int>(nullable: false),
+                    AccessId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateUpdated = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoleFunctionAccess", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserRoleFunctionAccess_UserAccessTypes_AccessId",
+                        column: x => x.AccessId,
+                        principalTable: "UserAccessTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoleFunctionAccess_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserRoleFunctionAccess_UserFunctions_FunctionId",
+                        column: x => x.FunctionId,
+                        principalTable: "UserFunctions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoleFunctionAccess_OrganizationRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "OrganizationRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrganizationDepartments",
                 columns: table => new
                 {
@@ -1138,6 +1181,26 @@ namespace Recruitment.Migrations
                 table: "RecruitmentLocations",
                 column: "TypeId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoleFunctionAccess_AccessId",
+                table: "UserRoleFunctionAccess",
+                column: "AccessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoleFunctionAccess_ApplicationUserId",
+                table: "UserRoleFunctionAccess",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoleFunctionAccess_FunctionId",
+                table: "UserRoleFunctionAccess",
+                column: "FunctionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoleFunctionAccess_RoleId",
+                table: "UserRoleFunctionAccess",
+                column: "RoleId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_OrganizationDocuments_OrganizationProfiles_OrganizationId",
                 table: "OrganizationDocuments",
@@ -1216,10 +1279,7 @@ namespace Recruitment.Migrations
                 name: "OrganizationUserRoles");
 
             migrationBuilder.DropTable(
-                name: "UserAccessTypes");
-
-            migrationBuilder.DropTable(
-                name: "UserFunctions");
+                name: "UserRoleFunctionAccess");
 
             migrationBuilder.DropTable(
                 name: "VerificationStatus");
@@ -1256,6 +1316,12 @@ namespace Recruitment.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrganizationUsersInfo");
+
+            migrationBuilder.DropTable(
+                name: "UserAccessTypes");
+
+            migrationBuilder.DropTable(
+                name: "UserFunctions");
 
             migrationBuilder.DropTable(
                 name: "ApplicantLevels");

@@ -10,7 +10,7 @@ using Recruitment.Data;
 namespace Recruitment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200926170436_test")]
+    [Migration("20201015110255_test")]
     partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -480,6 +480,8 @@ namespace Recruitment.Migrations
                     b.Property<string>("Type")
                         .IsRequired();
 
+                    b.Property<string>("UniqueCode");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -920,6 +922,37 @@ namespace Recruitment.Migrations
                     b.ToTable("UserFunctions");
                 });
 
+            modelBuilder.Entity("Recruitment.Models.UserRoleFunctionAccess", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AccessId");
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateUpdated");
+
+                    b.Property<int>("FunctionId");
+
+                    b.Property<long>("RoleId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccessId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("FunctionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UserRoleFunctionAccess");
+                });
+
             modelBuilder.Entity("Recruitment.Models.VerificationStatus", b =>
                 {
                     b.Property<long>("Id")
@@ -1203,6 +1236,28 @@ namespace Recruitment.Migrations
                     b.HasOne("Recruitment.Models.RecruitmentLocationType", "RecruitmentLocationType")
                         .WithMany()
                         .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Recruitment.Models.UserRoleFunctionAccess", b =>
+                {
+                    b.HasOne("Recruitment.Models.UserAccessType", "UserAccessType")
+                        .WithMany()
+                        .HasForeignKey("AccessId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Recruitment.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("Recruitment.Models.UserFunction", "UserFunction")
+                        .WithMany()
+                        .HasForeignKey("FunctionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Recruitment.Models.OrganizationRoles", "OrganizationRoles")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

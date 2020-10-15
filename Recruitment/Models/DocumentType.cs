@@ -11,6 +11,7 @@ namespace Recruitment.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public string UniqueCode { get; set; }
         [Required]
         public string Type { get; set; }
         public int CategoryId { get; set; }
