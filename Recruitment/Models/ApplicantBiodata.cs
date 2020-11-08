@@ -7,6 +7,7 @@ namespace Recruitment.Models
 {
     public partial class ApplicantBiodata
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public string UserId { get; set; }
         [ForeignKey("UserId")]

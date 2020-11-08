@@ -57,6 +57,14 @@
     <Compile Remove="Migrations\20201010070307_test.Designer.cs" />
     <Compile Remove="Migrations\20201010070725_test.cs" />
     <Compile Remove="Migrations\20201010070725_test.Designer.cs" />
+    <Compile Remove="Migrations\20201015110255_test.cs" />
+    <Compile Remove="Migrations\20201015110255_test.Designer.cs" />
+    <Compile Remove="Migrations\20201016210353_test.cs" />
+    <Compile Remove="Migrations\20201016210353_test.Designer.cs" />
+    <Compile Remove="Migrations\20201019022721_test.cs" />
+    <Compile Remove="Migrations\20201019022721_test.Designer.cs" />
+    <Compile Remove="Migrations\20201019024418_test.cs" />
+    <Compile Remove="Migrations\20201019024418_test.Designer.cs" />
     <Compile Remove="Models\AppDbContext.cs" />
   </ItemGroup>
 

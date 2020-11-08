@@ -167,6 +167,19 @@ namespace Recruitment.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobProfileElements",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Element = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobProfileElements", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobTypes",
                 columns: table => new
                 {
@@ -659,6 +672,30 @@ namespace Recruitment.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobProfiles",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    OrganizationId = table.Column<long>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobProfiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobProfiles_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrganizationDocuments",
                 columns: table => new
                 {
@@ -670,7 +707,7 @@ namespace Recruitment.Migrations
                     FileType = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    DateUpdated = table.Column<DateTime>(nullable: false)
+                    LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1082,6 +1119,16 @@ namespace Recruitment.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobProfiles_CreatedBy",
+                table: "JobProfiles",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobProfiles_OrganizationId",
+                table: "JobProfiles",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobRoles_CreatedBy",
                 table: "JobRoles",
                 column: "CreatedBy");
@@ -1202,6 +1249,14 @@ namespace Recruitment.Migrations
                 column: "RoleId");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_JobProfiles_OrganizationProfiles_OrganizationId",
+                table: "JobProfiles",
+                column: "OrganizationId",
+                principalTable: "OrganizationProfiles",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_OrganizationDocuments_OrganizationProfiles_OrganizationId",
                 table: "OrganizationDocuments",
                 column: "OrganizationId",
@@ -1233,8 +1288,8 @@ namespace Recruitment.Migrations
                 table: "OrganizationProfiles");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_OrganisationJobRoles_OrganizationDepartments_DepartmentId",
-                table: "OrganisationJobRoles");
+                name: "FK_RecruitmentLocations_OrganizationProfiles_OrganizationProfileId",
+                table: "RecruitmentLocations");
 
             migrationBuilder.DropTable(
                 name: "ApplicantAcademics");
@@ -1271,6 +1326,12 @@ namespace Recruitment.Migrations
 
             migrationBuilder.DropTable(
                 name: "ErrorLogs");
+
+            migrationBuilder.DropTable(
+                name: "JobProfileElements");
+
+            migrationBuilder.DropTable(
+                name: "JobProfiles");
 
             migrationBuilder.DropTable(
                 name: "OrganizationDocuments");
@@ -1339,19 +1400,19 @@ namespace Recruitment.Migrations
                 name: "Industries");
 
             migrationBuilder.DropTable(
+                name: "OrganizationProfiles");
+
+            migrationBuilder.DropTable(
+                name: "OrganisationJobRoles");
+
+            migrationBuilder.DropTable(
                 name: "OrganizationDepartments");
 
             migrationBuilder.DropTable(
                 name: "RecruitmentLocations");
 
             migrationBuilder.DropTable(
-                name: "OrganizationProfiles");
-
-            migrationBuilder.DropTable(
                 name: "RecruitmentLocationTypes");
-
-            migrationBuilder.DropTable(
-                name: "OrganisationJobRoles");
         }
     }
 }

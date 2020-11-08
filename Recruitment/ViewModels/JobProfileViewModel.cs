@@ -6,19 +6,16 @@ using System.Threading.Tasks;
 
 namespace Recruitment.ViewModels
 {
-    public class OrganizationDocumentViewModel
+    public class JobProfileViewModel
     {
         public long Id { get; set; }
         [Required]
-        public string OrganizationUserId { get; set; }
-        [Required]
+        public long OrganizationUserRoleId { get; set; }
+        public string OrganizationUserRole { get; set; }
         public long OrganizationId { get; set; }
         public string Organization { get; set; }
-        [Required]
-        public string FileName { get; set; }
-        [Required]
-        public string FileType { get; set; }
-        [Required]
+        public string UserId { get; set; }
+        public string Code { get; set; }
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime LastUpdated { get; set; }

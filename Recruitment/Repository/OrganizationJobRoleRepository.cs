@@ -53,69 +53,214 @@ namespace Recruitment.Repository
             return response;
         }
 
-        public async Task<IEnumerable<OrganizationJobeRoleViewModel>> GetAll()
+        public async Task<IEnumerable<JobRoleResponseModel>> GetAll()
         {
-            return await dbContext.OrganisationJobRoles.Select(x => new OrganizationJobeRoleViewModel
+            //return await dbContext.OrganisationJobRoles.Select(x => new OrganizationJobeRoleViewModel
+            //{
+            //    DateCreated = x.DateCreated,
+            //    DateUpdated = x.DateUpdated,
+            //    DepartmentId = x.DepartmentId,
+            //    Department = x.Department.DepartmentName,
+            //    Id = x.Id,
+            //    RoleName = x.JobRoleName
+            //}).ToListAsync();
+
+            IList<JobRoleResponseModel> responseModel = new List<JobRoleResponseModel>();
+            IList<OrganizationJobRoles> jobRoles = await dbContext.OrganisationJobRoles.ToListAsync();
+            foreach (OrganizationJobRoles job in jobRoles)
             {
-                DateCreated = x.DateCreated,
-                DateUpdated = x.DateUpdated,
-                DepartmentId = x.DepartmentId,
-                Department = x.Department.DepartmentName,
-                Id = x.Id,
-                RoleName = x.JobRoleName
-            }).ToListAsync();
+                OrganizationDepartments departments = await dbContext.OrganizationDepartments.Where(x => x.Id == job.DepartmentId).FirstOrDefaultAsync();
+                var jobProfile = await dbContext.JobProfiles.Where(x => x.Id == job.JobProfileId).FirstOrDefaultAsync();
+                var jobDetailList = await dbContext.JobProfileDetails.Where(x => x.JobProfileId == job.JobProfileId).Select(x => new JobProfileDetailViewModel
+                {
+                    Comment = x.Comment,
+                    DateCreated = x.DateCreated,
+                    Id = x.Id,
+                    IsMandatory = x.IsMandatory,
+                    JobElementId = x.JobElementId,
+                    JobProfileElement = x.JobProfileElement.Element,
+                    LastUpdated = x.LastUpdated,
+                    MaxRequirement = x.MaxRequirement,
+                    MinRequirement = x.MinRequirement,
+                    UserId = x.CreatedBy
+                }).ToListAsync();
+
+                JobRoleResponseModel model = new JobRoleResponseModel
+                {
+                    Id = job.Id,
+                    JobRole = job.JobRoleName,
+                    DepartmentId = (long)job.DepartmentId,
+                    Department = departments.DepartmentName,
+                    JobProfileId = job.JobProfileId,
+                    JobProfile = jobProfile.Description,
+                    JobProfileDetails = jobDetailList,
+                    Message = "Success",
+                    Code = 200
+                };
+
+                responseModel.Add(model);
+            }
+            return responseModel;
         }
 
-        public async Task<IEnumerable<OrganizationJobeRoleViewModel>> GetAllByDepartmentId(long id)
+        public async Task<IEnumerable<JobRoleResponseModel>> GetAllByDepartmentId(long id)
         {
-            return await dbContext.OrganisationJobRoles.Where(x => x.DepartmentId == id).Select(x => new OrganizationJobeRoleViewModel
+            IList<JobRoleResponseModel> responseModel = new List<JobRoleResponseModel>();
+            IList<OrganizationJobRoles> jobRoles = await dbContext.OrganisationJobRoles.Where(x=>x.DepartmentId == id).ToListAsync();
+            foreach (OrganizationJobRoles job in jobRoles)
             {
-                DateCreated = x.DateCreated,
-                DateUpdated = x.DateUpdated,
-                DepartmentId = x.DepartmentId,
-                Department = x.Department.DepartmentName,
-                Id = x.Id,
-                RoleName = x.JobRoleName
-            }).ToListAsync();
+                OrganizationDepartments departments = await dbContext.OrganizationDepartments.Where(x => x.Id == job.DepartmentId).FirstOrDefaultAsync();
+                var jobProfile = await dbContext.JobProfiles.Where(x => x.Id == job.JobProfileId).FirstOrDefaultAsync();
+                var jobDetailList = await dbContext.JobProfileDetails.Where(x => x.JobProfileId == job.JobProfileId).Select(x => new JobProfileDetailViewModel
+                {
+                    Comment = x.Comment,
+                    DateCreated = x.DateCreated,
+                    Id = x.Id,
+                    IsMandatory = x.IsMandatory,
+                    JobElementId = x.JobElementId,
+                    JobProfileElement = x.JobProfileElement.Element,
+                    LastUpdated = x.LastUpdated,
+                    MaxRequirement = x.MaxRequirement,
+                    MinRequirement = x.MinRequirement,
+                    UserId = x.CreatedBy
+                }).ToListAsync();
+
+                JobRoleResponseModel model = new JobRoleResponseModel
+                {
+                    Id = job.Id,
+                    JobRole = job.JobRoleName,
+                    DepartmentId = (long)job.DepartmentId,
+                    Department = departments.DepartmentName,
+                    JobProfileId = job.JobProfileId,
+                    JobProfile = jobProfile.Description,
+                    JobProfileDetails = jobDetailList,
+                    Message = "Success",
+                    Code = 200
+                };
+
+                responseModel.Add(model);
+            }
+            return responseModel;
         }
 
-        public async Task<IEnumerable<OrganizationJobeRoleViewModel>> GetAllByOrgnizationId(long id)
+        public async Task<IEnumerable<JobRoleResponseModel>> GetAllByOrgnizationId(long id)
         {
-            return await dbContext.OrganisationJobRoles.Where(x => x.Department.RecruitmentLocation.OrganizationProfileId == id).Select(x => new OrganizationJobeRoleViewModel
+            IList<JobRoleResponseModel> responseModel = new List<JobRoleResponseModel>();
+            IList<OrganizationJobRoles> jobRoles = await dbContext.OrganisationJobRoles.Where(x => x.JobProfile.OrganizationId == id).ToListAsync();
+            foreach (OrganizationJobRoles job in jobRoles)
             {
-                DateCreated = x.DateCreated,
-                DateUpdated = x.DateUpdated,
-                DepartmentId = x.DepartmentId,
-                Department = x.Department.DepartmentName,
-                Id = x.Id,
-                RoleName = x.JobRoleName
-            }).ToListAsync();
+                OrganizationDepartments departments = await dbContext.OrganizationDepartments.Where(x => x.Id == job.DepartmentId).FirstOrDefaultAsync();
+                var jobProfile = await dbContext.JobProfiles.Where(x => x.Id == job.JobProfileId).FirstOrDefaultAsync();
+                var jobDetailList = await dbContext.JobProfileDetails.Where(x => x.JobProfileId == job.JobProfileId).Select(x => new JobProfileDetailViewModel
+                {
+                    Comment = x.Comment,
+                    DateCreated = x.DateCreated,
+                    Id = x.Id,
+                    IsMandatory = x.IsMandatory,
+                    JobElementId = x.JobElementId,
+                    JobProfileElement = x.JobProfileElement.Element,
+                    LastUpdated = x.LastUpdated,
+                    MaxRequirement = x.MaxRequirement,
+                    MinRequirement = x.MinRequirement,
+                    UserId = x.CreatedBy
+                }).ToListAsync();
+
+                JobRoleResponseModel model = new JobRoleResponseModel
+                {
+                    Id = job.Id,
+                    JobRole = job.JobRoleName,
+                    DepartmentId = (long)job.DepartmentId,
+                    Department = departments.DepartmentName,
+                    JobProfileId = job.JobProfileId,
+                    JobProfile = jobProfile.Description,
+                    JobProfileDetails = jobDetailList,
+                    Message = "Success",
+                    Code = 200
+                };
+
+                responseModel.Add(model);
+            }
+            return responseModel;
         }
 
-        public async Task<IEnumerable<OrganizationJobeRoleViewModel>> GetAllByRecruitmentLocationId(long id)
+        public async Task<IEnumerable<JobRoleResponseModel>> GetAllByRecruitmentLocationId(long id)
         {
-            return await dbContext.OrganisationJobRoles.Where(x => x.Department.RecruitmentLocationId == id).Select(x => new OrganizationJobeRoleViewModel
+            IList<JobRoleResponseModel> responseModel = new List<JobRoleResponseModel>();
+            IList<OrganizationJobRoles> jobRoles = await dbContext.OrganisationJobRoles.Where(x => x.Department.RecruitmentLocationId == id).ToListAsync();
+            foreach (OrganizationJobRoles job in jobRoles)
             {
-                DateCreated = x.DateCreated,
-                DateUpdated = x.DateUpdated,
-                DepartmentId = x.DepartmentId,
-                Department = x.Department.DepartmentName,
-                Id = x.Id,
-                RoleName = x.JobRoleName
-            }).ToListAsync();
+                OrganizationDepartments departments = await dbContext.OrganizationDepartments.Where(x => x.Id == job.DepartmentId).FirstOrDefaultAsync();
+                var jobProfile = await dbContext.JobProfiles.Where(x => x.Id == job.JobProfileId).FirstOrDefaultAsync();
+                var jobDetailList = await dbContext.JobProfileDetails.Where(x => x.JobProfileId == job.JobProfileId).Select(x => new JobProfileDetailViewModel
+                {
+                    Comment = x.Comment,
+                    DateCreated = x.DateCreated,
+                    Id = x.Id,
+                    IsMandatory = x.IsMandatory,
+                    JobElementId = x.JobElementId,
+                    JobProfileElement = x.JobProfileElement.Element,
+                    LastUpdated = x.LastUpdated,
+                    MaxRequirement = x.MaxRequirement,
+                    MinRequirement = x.MinRequirement,
+                    UserId = x.CreatedBy
+                }).ToListAsync();
+
+                JobRoleResponseModel model = new JobRoleResponseModel
+                {
+                    Id = job.Id,
+                    JobRole = job.JobRoleName,
+                    DepartmentId = (long)job.DepartmentId,
+                    Department = departments.DepartmentName,
+                    JobProfileId = job.JobProfileId,
+                    JobProfile = jobProfile.Description,
+                    JobProfileDetails = jobDetailList,
+                    Message = "Success",
+                    Code = 200
+                };
+
+                responseModel.Add(model);
+            }
+            return responseModel;
         }
 
-        public async Task<OrganizationJobeRoleViewModel> GetJobRoleById(long id)
+        public async Task<JobRoleResponseModel> GetJobRoleById(long id)
         {
-            return await dbContext.OrganisationJobRoles.Where(x => x.Id == id).Select(x => new OrganizationJobeRoleViewModel
+            JobRoleResponseModel response = new JobRoleResponseModel();
+            OrganizationJobRoles jobRole = await dbContext.OrganisationJobRoles.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (jobRole != null)
             {
-                DateCreated = x.DateCreated,
-                DateUpdated = x.DateUpdated,
-                DepartmentId = x.DepartmentId,
-                Department = x.Department.DepartmentName,
-                Id = x.Id,
-                RoleName = x.JobRoleName
-            }).FirstOrDefaultAsync();
+                OrganizationDepartments departments = await dbContext.OrganizationDepartments.Where(x => x.Id == jobRole.DepartmentId).FirstOrDefaultAsync();
+                var jobProfile = await dbContext.JobProfiles.Where(x => x.Id == jobRole.JobProfileId).FirstOrDefaultAsync();
+                var jobDetailList = await dbContext.JobProfileDetails.Where(x => x.JobProfileId == jobRole.JobProfileId).Select(x => new JobProfileDetailViewModel
+                {
+                    Comment = x.Comment,
+                    DateCreated = x.DateCreated,
+                    Id = x.Id,
+                    IsMandatory = x.IsMandatory,
+                    JobElementId = x.JobElementId,
+                    JobProfileElement = x.JobProfileElement.Element,
+                    LastUpdated = x.LastUpdated,
+                    MaxRequirement = x.MaxRequirement,
+                    MinRequirement = x.MinRequirement,
+                    UserId = x.CreatedBy
+                }).ToListAsync();
+
+                response.Id = jobRole.Id;
+                response.JobRole = jobRole.JobRoleName;
+                response.DepartmentId = (long)departments.Id;
+                response.Department = departments.DepartmentName;
+                response.JobProfileId = jobRole.JobProfileId;
+                response.JobProfile = jobProfile.Description;
+                response.JobProfileDetails = jobDetailList;
+                response.Message = "Success";
+                response.Code = 200;
+            }
+            else
+            {
+                response.Message = "Record not found";
+                response.Code = 401;
+            }
+            return response;
         }
 
         public async Task<ResponseModel> SaveAsync(OrganizationJobeRoleViewModel model)
@@ -123,29 +268,41 @@ namespace Recruitment.Repository
             ResponseModel response = new ResponseModel();
             try
             {
+                //checck if department exist
                 OrganizationDepartments department = await dbContext.OrganizationDepartments.Where(x => x.Id == model.DepartmentId).FirstOrDefaultAsync();
                 if (department != null)
                 {
-                    OrganizationJobRoles jobRole = await dbContext.OrganisationJobRoles.Where(x =>
-                        x.JobRoleName.ToLower() == model.RoleName.ToLower() && x.DepartmentId == model.DepartmentId).FirstOrDefaultAsync();
-                    if (jobRole == null)
+                    //check if job profile exist
+                    JobProfile profile = await dbContext.JobProfiles.Where(x => x.Id == model.JobProfileId).FirstOrDefaultAsync();
+                    if (profile != null)
                     {
-                        OrganizationJobRoles role = new OrganizationJobRoles()
+                        OrganizationJobRoles jobRole = await dbContext.OrganisationJobRoles.Where(x =>
+                        x.JobRoleName.ToLower() == model.RoleName.ToLower() && x.DepartmentId == model.DepartmentId).FirstOrDefaultAsync();
+                        if (jobRole == null)
                         {
-                            DateCreated = DateTime.Now,
-                            DateUpdated = DateTime.Now,
-                            DepartmentId = model.DepartmentId,
-                            JobRoleName = model.RoleName
-                        };
-                        dbContext.OrganisationJobRoles.Add(role);
-                        await dbContext.SaveChangesAsync();
-                        response.code = 200;
-                        response.message = "Role saved successfully";
+                            OrganizationJobRoles role = new OrganizationJobRoles()
+                            {
+                                DateCreated = DateTime.Now,
+                                DateUpdated = DateTime.Now,
+                                DepartmentId = model.DepartmentId,
+                                JobProfileId = model.JobProfileId,
+                                JobRoleName = model.RoleName
+                            };
+                            dbContext.OrganisationJobRoles.Add(role);
+                            await dbContext.SaveChangesAsync();
+                            response.code = 200;
+                            response.message = "Role saved successfully";
+                        }
+                        else
+                        {
+                            response.code = 401;
+                            response.message = "This role has been added already for this department";
+                        }
                     }
                     else
                     {
-                        response.code = 401;
-                        response.message = "This role has been added already for this department";
+                        response.code = 402;
+                        response.message = "Job Profile doesn't exist";
                     }
                 }
                 else
@@ -178,20 +335,30 @@ namespace Recruitment.Repository
                 OrganizationJobRoles role = await dbContext.OrganisationJobRoles.FirstOrDefaultAsync(x => x.Id == id);
                 if (role != null)
                 {
-                    OrganizationDepartments department = await dbContext.OrganizationDepartments.Where(x => x.Id == model.DepartmentId).FirstOrDefaultAsync();
-                    if (department != null)
+                    JobProfile profile = await dbContext.JobProfiles.Where(x => x.Id == model.JobProfileId).FirstOrDefaultAsync();
+                    if (profile != null)
                     {
-                        role.DateUpdated = DateTime.Now;
-                        role.DepartmentId = department.Id;
-                        role.JobRoleName = model.RoleName;
-                        await dbContext.SaveChangesAsync();
-                        response.code = 200;
-                        response.message = "Role updated successfully";
+                        OrganizationDepartments department = await dbContext.OrganizationDepartments.Where(x => x.Id == model.DepartmentId).FirstOrDefaultAsync();
+                        if (department != null)
+                        {
+                            role.DateUpdated = DateTime.Now;
+                            role.DepartmentId = department.Id;
+                            role.JobProfileId = model.JobProfileId;
+                            role.JobRoleName = model.RoleName;
+                            await dbContext.SaveChangesAsync();
+                            response.code = 200;
+                            response.message = "Role updated successfully";
+                        }
+                        else
+                        {
+                            response.code = 400;
+                            response.message = "Department doesn't exist";
+                        }
                     }
                     else
                     {
-                        response.code = 400;
-                        response.message = "Department doesn't exist";
+                        response.code = 401;
+                        response.message = "Job Profile doesn't exist";
                     }
                 }
                 else

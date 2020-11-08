@@ -8,7 +8,7 @@ using Recruitment.Data;
 using Recruitment.Models;
 using Recruitment.RespondModels;
 using Recruitment.ViewModels;
-using static Recruitment.Helper.Status;
+using static Recruitment.Helper.Utility;
 
 namespace Recruitment.Repository
 {
