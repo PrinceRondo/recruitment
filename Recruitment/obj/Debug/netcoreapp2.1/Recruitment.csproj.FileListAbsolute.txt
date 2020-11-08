@@ -20,3 +20,4 @@ C:\Users\Tossen Macs\Desktop\New folder (2)\Recruitment\Recruitment\obj\Debug\ne
 C:\Users\Tossen Macs\Desktop\New folder (2)\Recruitment\Recruitment\obj\Debug\netcoreapp2.1\Recruitment.dll
 C:\Users\Tossen Macs\Desktop\New folder (2)\Recruitment\Recruitment\obj\Debug\netcoreapp2.1\Recruitment.pdb
 C:\Users\Tossen Macs\Desktop\New folder (2)\Recruitment\Recruitment\obj\Debug\netcoreapp2.1\Recruitment.csproj.CopyComplete
+C:\Users\Tossen Macs\Desktop\New folder (2)\Recruitment\Recruitment\obj\Debug\netcoreapp2.1\Recruitment.csprojAssemblyReference.cache

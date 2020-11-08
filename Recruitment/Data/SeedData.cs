@@ -18,7 +18,7 @@ namespace Recruitment.Data
            IDocumentCategoryRepository categoryRepository, IGradeRepository gradeRepository,
            IIndustryRepository industryRepository, IJobTypeRepository typeRepository,
            IRecruitmentLocationTypeRepository LocationtypeRepository, IUserAccessTypeRepository accessTypeRepository,
-           IUserFunctionRepository functionRepository
+           IUserFunctionRepository functionRepository, IJobProfileElementRepository elementRepository
            )
         {
             SeedRoles(roleManager);
@@ -36,6 +36,7 @@ namespace Recruitment.Data
             SeedRecruitmentLocationType(LocationtypeRepository);
             SeedUserAccessType(accessTypeRepository);
             SeedUserFunction(functionRepository);
+            SeedJobProfileElement(elementRepository);
         }
         public static void SeedRoles(RoleManager<IdentityRole> roleManager)
         {
@@ -376,8 +377,7 @@ namespace Recruitment.Data
                 "Manage Interview Rooms", "Manage Job Profiles", "Process Applications", "Manage Schedules",
                 "Schedule Tests and Interviews", "Manage Reports", "Review Job Postings", "Review Job Profiles",
                 "Review Applications", "Review Templates", "Review Schedules", "Review  Tests and Interviews",
-                "Approve Applications", "Manage Schedules", "Manage Tasks and Events", "Submit Interview Scores",
-                "Manage Reports", "Manage Tasks and Events","Manage Profile"};
+                "Approve Applications", "Manage Tasks and Events", "Submit Interview Scores","Manage Profile"};
             foreach (string func in functionList)
             {
                 if (functionRepository.FindByNameAsync(func).Result == null)
@@ -389,6 +389,29 @@ namespace Recruitment.Data
                     try
                     {
                         functionRepository.SaveAsync(newFunction);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                }
+            }
+        }
+
+        public static void SeedJobProfileElement(IJobProfileElementRepository elementRepository)
+        {
+            string[] elementList = new string[] { "NYSC", "Age", "Academic Qualification", "Work Experience", "Gender", "Professional Certification" };
+            foreach (string element in elementList)
+            {
+                if (elementRepository.FindByNameAsync(element).Result == null)
+                {
+                    JobProfileElement newElement = new JobProfileElement()
+                    {
+                        Element = element
+                    };
+                    try
+                    {
+                        elementRepository.SaveAsync(newElement);
                     }
                     catch (Exception ex)
                     {

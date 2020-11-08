@@ -10,7 +10,7 @@ using Recruitment.Data;
 namespace Recruitment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201015110255_test")]
+    [Migration("20201019024921_test")]
     partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -568,6 +568,48 @@ namespace Recruitment.Migrations
                     b.ToTable("Institutions");
                 });
 
+            modelBuilder.Entity("Recruitment.Models.JobProfile", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired();
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<DateTime>("LastUpdated");
+
+                    b.Property<long>("OrganizationId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("JobProfiles");
+                });
+
+            modelBuilder.Entity("Recruitment.Models.JobProfileElement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Element");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobProfileElements");
+                });
+
             modelBuilder.Entity("Recruitment.Models.JobRoles", b =>
                 {
                     b.Property<long>("Id")
@@ -655,13 +697,13 @@ namespace Recruitment.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
-                    b.Property<DateTime>("DateUpdated");
-
                     b.Property<string>("Description");
 
                     b.Property<string>("FileName");
 
                     b.Property<string>("FileType");
+
+                    b.Property<DateTime>("LastUpdated");
 
                     b.Property<long>("OrganizationId");
 
@@ -1117,6 +1159,19 @@ namespace Recruitment.Migrations
                     b.HasOne("Recruitment.Data.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Recruitment.Models.JobProfile", b =>
+                {
+                    b.HasOne("Recruitment.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Recruitment.Models.OrganizationProfile", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Recruitment.Models.JobRoles", b =>

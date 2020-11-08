@@ -12,24 +12,23 @@ using Recruitment.ViewModels;
 namespace Recruitment.Controllers
 {
     [Route("api/[controller]")]
-    public class OrganizationJobRoleController : Controller
+    public class JobProfileDetailController : Controller
     {
-        private readonly IOrganizationJobRoleRepository roleRepository;
+        private readonly IJobProfileDetailRepository detailRepository;
 
-        public OrganizationJobRoleController(IOrganizationJobRoleRepository roleRepository)
+        public JobProfileDetailController(IJobProfileDetailRepository detailRepository)
         {
-            this.roleRepository = roleRepository;
+            this.detailRepository = detailRepository;
         }
-
         [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> SaveRole([FromBody]OrganizationJobeRoleViewModel model)
+        public async Task<IActionResult> Save([FromBody]JobProfileDetailViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            ResponseModel responseModel = await roleRepository.SaveAsync(model);
+            ResponseModel responseModel = await detailRepository.SaveAsync(model);
             if (responseModel != null)
             {
                 return Ok(responseModel);
@@ -38,13 +37,13 @@ namespace Recruitment.Controllers
         }
         [Route("[action]")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRole(int id, [FromBody]OrganizationJobeRoleViewModel model)
+        public async Task<IActionResult> Update(long id, [FromBody]JobProfileDetailViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            ResponseModel responseModel = await roleRepository.UpdateAsync(id, model);
+            ResponseModel responseModel = await detailRepository.UpdateAsync(id, model);
             if (responseModel != null)
             {
                 return Ok(responseModel);
@@ -53,13 +52,13 @@ namespace Recruitment.Controllers
         }
         [Route("[action]")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRole(long id)
+        public async Task<IActionResult> Delete(long id, [FromBody]DeleteViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            ResponseModel responseModel = await roleRepository.DeleteAsync(id);
+            ResponseModel responseModel = await detailRepository.DeleteAsync(id, model);
             if (responseModel != null)
             {
                 return Ok(responseModel);
@@ -74,7 +73,67 @@ namespace Recruitment.Controllers
             {
                 return BadRequest(ModelState);
             }
-            IEnumerable<JobRoleResponseModel> responseModel = await roleRepository.GetAll();
+            IEnumerable<JobProfileDetailViewModel> responseModel = await detailRepository.GetAll();
+            if (responseModel.Count() > 0)
+            {
+                return Ok(responseModel);
+            }
+            return Ok("No Data Available");
+        }
+        [Route("[action]")]
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetAllByUserId(string userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            IEnumerable<JobProfileDetailViewModel> responseModel = await detailRepository.GetAllByUserId(userId);
+            if (responseModel.Count() > 0)
+            {
+                return Ok(responseModel);
+            }
+            return Ok("No Data Available");
+        }
+        [Route("[action]")]
+        [HttpGet("{organizationId}")]
+        public async Task<IActionResult> GetAllByOrganizationId(int organizationId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            IEnumerable<JobProfileDetailViewModel> responseModel = await detailRepository.GetAllByOrgnizationId(organizationId);
+            if (responseModel.Count() > 0)
+            {
+                return Ok(responseModel);
+            }
+            return Ok("No Data Available");
+        }
+        [Route("[action]")]
+        [HttpGet("{jobProfileId}")]
+        public async Task<IActionResult> GetAllByJobProfileId(int jobProfileId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            IEnumerable<JobProfileDetailViewModel> responseModel = await detailRepository.GetAllByJobProfileId(jobProfileId);
+            if (responseModel.Count() > 0)
+            {
+                return Ok(responseModel);
+            }
+            return Ok("No Data Available");
+        }
+        [Route("[action]")]
+        [HttpGet("{elementId}")]
+        public async Task<IActionResult> GetAllByElementId(int elementId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            IEnumerable<JobProfileDetailViewModel> responseModel = await detailRepository.GetAllByOrgnizationId(elementId);
             if (responseModel.Count() > 0)
             {
                 return Ok(responseModel);
@@ -83,61 +142,13 @@ namespace Recruitment.Controllers
         }
         [Route("[action]")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAllByOrganizationId(long id)
+        public async Task<IActionResult> GetJobProfileDetailById(int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            IEnumerable<JobRoleResponseModel> responseModel = await roleRepository.GetAllByOrgnizationId(id);
-            if (responseModel.Count() > 0)
-            {
-                return Ok(responseModel);
-            }
-            return Ok("No Data Available");
-        }
-
-        [Route("[action]")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAllByRecruitmentLocationId(long id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            IEnumerable<JobRoleResponseModel> responseModel = await roleRepository.GetAllByRecruitmentLocationId(id);
-            if (responseModel.Count() > 0)
-            {
-                return Ok(responseModel);
-            }
-            return Ok("No Data Available");
-        }
-
-        [Route("[action]")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAllByDepartmentId(long id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            IEnumerable<JobRoleResponseModel> responseModel = await roleRepository.GetAllByDepartmentId(id);
-            if (responseModel.Count() > 0)
-            {
-                return Ok(responseModel);
-            }
-            return Ok("No Data Available");
-        }
-
-        [Route("[action]")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetJobRoleById(long id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            JobRoleResponseModel responseModel = await roleRepository.GetJobRoleById(id);
+            JobProfileDetailViewModel responseModel = await detailRepository.GetJobProfileById(id);
             if (responseModel != null)
             {
                 return Ok(responseModel);

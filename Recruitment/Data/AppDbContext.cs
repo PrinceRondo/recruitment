@@ -47,5 +47,8 @@ namespace Recruitment.Data
         public virtual DbSet<UserAccessType> UserAccessTypes { get; set; }
         public virtual DbSet<UserFunction> UserFunctions { get; set; }
         public virtual DbSet<UserRoleFunctionAccess> UserRoleFunctionAccess { get; set; }
+        public virtual DbSet<JobProfileElement> JobProfileElements { get; set; }
+        public virtual DbSet<JobProfile> JobProfiles { get; set; }
+        public virtual DbSet<JobProfileDetail> JobProfileDetails { get; set; }
     }
 }

@@ -14,6 +14,8 @@ namespace Recruitment.ViewModels
         [Required]
         public long? DepartmentId { get; set; }
         public string Department { get; set; }
+        public long JobProfileId { get; set; }
+        public string JobProfile { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
     }

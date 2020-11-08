@@ -61,7 +61,7 @@ namespace Recruitment.Repository
             return await dbContext.OrganizationDocuments.Select(x => new OrganizationDocumentViewModel
             {
                 DateCreated = x.DateCreated,
-                DateUpdated = x.DateUpdated,
+                LastUpdated = x.LastUpdated,
                 Description = x.Description,
                 FileName = x.FileName,
                 FileType = x.FileType,
@@ -77,7 +77,7 @@ namespace Recruitment.Repository
             return await dbContext.OrganizationDocuments.Where(x=>x.OrganizationId == id).Select(x => new OrganizationDocumentViewModel
             {
                 DateCreated = x.DateCreated,
-                DateUpdated = x.DateUpdated,
+                LastUpdated = x.LastUpdated,
                 Description = x.Description,
                 FileName = x.FileName,
                 FileType = x.FileType,
@@ -93,7 +93,7 @@ namespace Recruitment.Repository
             return await dbContext.OrganizationDocuments.Where(x => x.Id == id).Select(x => new OrganizationDocumentViewModel
             {
                 DateCreated = x.DateCreated,
-                DateUpdated = x.DateUpdated,
+                LastUpdated = x.LastUpdated,
                 Description = x.Description,
                 FileName = x.FileName,
                 FileType = x.FileType,
@@ -122,7 +122,7 @@ namespace Recruitment.Repository
                             OrganizationDocument document = new OrganizationDocument()
                             {
                                 DateCreated = DateTime.Now,
-                                DateUpdated = DateTime.Now,
+                                LastUpdated = DateTime.Now,
                                 Description = model.Description,
                                 FileName = model.FileName,
                                 FileType = model.FileType,
@@ -176,7 +176,7 @@ namespace Recruitment.Repository
                 OrganizationDocument document = await dbContext.OrganizationDocuments.FirstOrDefaultAsync(x => x.Id == id);
                 if (document != null)
                 {
-                    document.DateUpdated = DateTime.Now;
+                    document.LastUpdated = DateTime.Now;
                     document.Description = model.Description;
                     document.FileName = model.FileName;
                     document.FileType = model.FileType;

@@ -99,8 +99,9 @@ namespace Recruitment.Repository
         Task<ResponseModel> SaveAsync(JobRoles model);
         Task<ResponseModel> UpdateAsync(long id, JobRoles model);
         Task<ResponseModel> DeleteAsync(long id);
-        Task<IEnumerable<JobRoles>> GetAllRole();
-        Task<IEnumerable<JobRoles>> GetAllRoleByIndustry(long industryId);
+        Task<IEnumerable<JobRoles>> GetAllJobRoles();
+        Task<IEnumerable<JobRoles>> GetAllJobRolesByIndustry(long Id);
+        Task<JobRoles> GetJobRoleById(long industryId);
     }
     public interface IJobTypeRepository
     {
@@ -203,12 +204,12 @@ namespace Recruitment.Repository
 
     public interface IOrganizationJobRoleRepository
     {
-        Task<IEnumerable<OrganizationJobeRoleViewModel>> GetAllByOrgnizationId(long id);
-        Task<IEnumerable<OrganizationJobeRoleViewModel>> GetAllByRecruitmentLocationId(long id);
-        Task<IEnumerable<OrganizationJobeRoleViewModel>> GetAllByDepartmentId(long id);
+        Task<IEnumerable<JobRoleResponseModel>> GetAllByOrgnizationId(long id);
+        Task<IEnumerable<JobRoleResponseModel>> GetAllByRecruitmentLocationId(long id);
+        Task<IEnumerable<JobRoleResponseModel>> GetAllByDepartmentId(long id);
         Task<ResponseModel> SaveAsync(OrganizationJobeRoleViewModel model);
-        Task<IEnumerable<OrganizationJobeRoleViewModel>> GetAll();
-        Task<OrganizationJobeRoleViewModel> GetJobRoleById(long id);
+        Task<IEnumerable<JobRoleResponseModel>> GetAll();
+        Task<JobRoleResponseModel> GetJobRoleById(long id);
         Task<ResponseModel> UpdateAsync(long id, OrganizationJobeRoleViewModel model);
         Task<ResponseModel> DeleteAsync(long id);
     }
@@ -242,6 +243,13 @@ namespace Recruitment.Repository
         Task<IEnumerable<RecruitmentLocationType>> GetAllLocationType();
     }
 
+    public interface IJobProfileElementRepository
+    {
+        Task<JobProfileElement> FindByNameAsync(string name);
+        Task<ResponseModel> SaveAsync(JobProfileElement model);
+        Task<IEnumerable<JobProfileElement>> GetAllElement();
+    }
+
     public interface IUserRoleAccessRepository
     {
         Task<IEnumerable<RoleFuctionAccessViewModel>> GetAllByOrgnizationId(long id);
@@ -251,5 +259,29 @@ namespace Recruitment.Repository
         Task<RoleFuctionAccessViewModel> GetUserRoleFuntionAccessById(long id);
         Task<ResponseModel> UpdateAsync(long id, RoleFuctionAccessViewModel model);
         Task<ResponseModel> DeleteAsync(long id);
+    }
+
+    public interface IJobProfileRepository
+    {
+        Task<IEnumerable<JobProfileViewModel>> GetAllByOrgnizationId(long id);
+        Task<IEnumerable<JobProfileViewModel>> GetAllByUserId(string userId);
+        Task<ResponseModel> SaveAsync(JobProfileViewModel model);
+        Task<IEnumerable<JobProfileViewModel>> GetAll();
+        Task<JobProfileViewModel> GetJobProfileById(long id);
+        Task<ResponseModel> UpdateAsync(long id, JobProfileViewModel model);
+        Task<ResponseModel> DeleteAsync(long id, DeleteViewModel model);
+    }
+
+    public interface IJobProfileDetailRepository
+    {
+        Task<IEnumerable<JobProfileDetailViewModel>> GetAllByOrgnizationId(long id);
+        Task<IEnumerable<JobProfileDetailViewModel>> GetAllByUserId(string userId);
+        Task<IEnumerable<JobProfileDetailViewModel>> GetAllByJobProfileId(long jobProfileId);
+        Task<IEnumerable<JobProfileDetailViewModel>> GetAllByElementId(long elementId);
+        Task<ResponseModel> SaveAsync(JobProfileDetailViewModel model);
+        Task<IEnumerable<JobProfileDetailViewModel>> GetAll();
+        Task<JobProfileDetailViewModel> GetJobProfileById(long id);
+        Task<ResponseModel> UpdateAsync(long id, JobProfileDetailViewModel model);
+        Task<ResponseModel> DeleteAsync(long id, DeleteViewModel model);
     }
 }

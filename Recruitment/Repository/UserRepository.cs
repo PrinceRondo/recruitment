@@ -367,6 +367,7 @@ namespace Recruitment.Repository
             {
                 //if (ModelState.IsValid)
                 //{
+                string password = Utility.GenerateRandomPassword();
                 var user = new ApplicationUser
                 {
                     UserName = model.EmailAddress,
@@ -374,16 +375,16 @@ namespace Recruitment.Repository
                     FirstName = model.Firstname,
                     LastName = model.Lastname
                 };
-                if (model.Password.Count() < 6)
-                {
-                    responseModel.message = "Password should not be lesser than 6 characters";
-                    responseModel.code = 404;
-                    return responseModel;
-                }
+                //if (model.Password.Count() < 6)
+                //{
+                //    responseModel.message = "Password should not be lesser than 6 characters";
+                //    responseModel.code = 404;
+                //    return responseModel;
+                //}
                 var userExist = await userManager.FindByEmailAsync(user.Email);
                 if (userExist == null)
                 {
-                    var result = await userManager.CreateAsync(user, model.Password);
+                    var result = await userManager.CreateAsync(user, password);
                     result = await userManager.AddToRoleAsync(user, "organizationuser");
                     if (result.Succeeded)
                     {
@@ -410,7 +411,8 @@ namespace Recruitment.Repository
                             BodyBuilder bodyBuilder = new BodyBuilder();
                             MimeMessage message = new MimeMessage();
                             message.Subject = "Organization User Registration";
-                            bodyBuilder.HtmlBody = "<h1>Recruitment Email Confirmation</h1><br/><h3>Click <a href=" + confirmationLink + ">here</a> to confirm your email</h3>";
+                            bodyBuilder.HtmlBody = "<h1>Recruitment Email Confirmation</h1><br/><h3>Click <a href=" + confirmationLink + ">here</a> to confirm your email</h3><br/>" +
+                             "Your Password is  " + password;
                             mailer.mailing(model.Firstname, model.EmailAddress, bodyBuilder, message);
                             //BackgroundJob.Enqueue(()=> helperClass.mailing(registrationModel.firstName, registrationModel.email, confirmationLink));
                             //BackgroundJob.Schedule(() => helperClass.mailing(registrationModel.firstName, registrationModel.email, confirmationLink), TimeSpan.FromSeconds(30));

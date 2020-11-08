@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Recruitment.Data;
+using Recruitment.Helper;
 using Recruitment.Models;
 using Recruitment.RespondModels;
 using Recruitment.ViewModels;
@@ -115,6 +116,17 @@ namespace Recruitment.Repository
                     if (organization != null)
                     {
                         //if(model.IsHeadOfficeStructure == true)
+                        if(model.RecruitmentLocationTypeId == (int)Utility.RecruitmentLocationType.Head_Office)
+                        {
+                            RecruitmentLocation location = await dbContext.RecruitmentLocations.Where(x => x.TypeId == (int)Utility.RecruitmentLocationType.Head_Office && x.OrganizationProfileId == model.OrganizationId).FirstOrDefaultAsync();
+                            if(location != null)
+                            {
+                                response.code = 403;
+                                response.message = "Head Office has already been created";
+                                return response;
+                            }
+                        }
+                        
                         RecruitmentLocation recruitmentLocation = await dbContext.RecruitmentLocations.Where(x =>
                         x.Location.ToLower() == model.Location.ToLower() && x.OrganizationProfileId == model.OrganizationId).FirstOrDefaultAsync();
                         if (recruitmentLocation == null)
